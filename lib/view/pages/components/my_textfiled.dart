@@ -5,8 +5,9 @@ class MyTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final bool visible;
+  final void Function(String)? onChanged;
   final bool? obscureText;
-final TextInputType? keyboardType;
+  final TextInputType? keyboardType;
   final String hintText;
 
   final TextEditingController? controller;
@@ -18,7 +19,9 @@ final TextInputType? keyboardType;
       required this.hintText,
       this.prefixIcon,
       this.suffixIcon,
-      this.obscureText = false, this.keyboardType});
+      this.obscureText = false,
+      this.keyboardType,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +40,19 @@ final TextInputType? keyboardType;
         SizedBox(
           height: 50,
           child: TextFormField(
-            keyboardType:keyboardType ,
+            onChanged: onChanged,
+            keyboardType: keyboardType,
             obscureText: obscureText ?? false,
             controller: controller,
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
               prefixIcon: prefixIcon,
-            
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               filled: true,
               fillColor: Colors.white,
               hintText: hintText,
               hintStyle: TextStyle(
-                
                   fontWeight: FontWeight.w200,
                   fontSize: 14,
                   color: Colors.grey[400]),

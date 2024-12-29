@@ -3,29 +3,26 @@ part 'hive_model.g.dart';
 @HiveType(typeId:0)
 class Product extends HiveObject{
   @HiveField(0)
-  final String productId;
+  final String? productId;
   @HiveField(1)
-  final String name;
+  final String? name;
   @HiveField(2)
-  final String description;
+  final String? description;
   @HiveField(3)
-  final String supervisorName;
+  final DateTime? inventoryDate;
   @HiveField(4)
-  final DateTime inventoryDate;
+  final int? currentStock;
   @HiveField(5)
-  final int currentStock;
+  final String? productPhoto;
   @HiveField(6)
-  final String productPhoto;
-  @HiveField(7)
-  final String? deviceId;
-   Product({
+  final String? supervisorName;
+   Product( {
+    required this.supervisorName,
     required this.productId,
     required this.name,
     required this.description,
-    required this.supervisorName,
     required this.inventoryDate,
     required this.currentStock,
     required this.productPhoto,
-    required this.deviceId
   });
 }

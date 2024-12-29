@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:inventory_managment/view/pages/components/common_button.dart';
 
 class ProductCard extends StatelessWidget {
   final String productId;
@@ -10,13 +11,15 @@ class ProductCard extends StatelessWidget {
   final String stock;
   final String imageUrl;
   final String userId;
+  void Function() updateStock;
   final String username;
   final String designation;
   final String companyName;
   final String deviceId;
 
-  const ProductCard({
+  ProductCard({
     super.key,
+    required this.updateStock,
     required this.productId,
     required this.name,
     required this.description,
@@ -29,7 +32,6 @@ class ProductCard extends StatelessWidget {
     required this.designation,
     required this.companyName,
     required this.deviceId,
-    required String price,
   });
 
   @override
@@ -54,33 +56,45 @@ class ProductCard extends StatelessWidget {
           children: [
             Text(
               'Product ID: $productId',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: imageUrl.isNotEmpty
-                    ? Image.file(
-          File(imageUrl),
-          height: 80,
-          width: 80,
-          fit: BoxFit.cover,
-        )
-      : Icon(
-          Icons.image_not_supported,
-          size: 80,
-          color: Colors.grey,
-        ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              name,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 4),
-            Text(
-              description,
-              style: TextStyle(color: Colors.grey[700]),
+            Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: imageUrl.isNotEmpty
+                      ? Image.file(
+                          File(imageUrl),
+                          height: 80,
+                          width: 80,
+                          fit: BoxFit.cover,
+                        )
+                      : Icon(
+                          Icons.image_not_supported,
+                          size: 80,
+                          color: Colors.grey,
+                        ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        description,
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8),
             Text(
@@ -98,7 +112,6 @@ class ProductCard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             SizedBox(height: 8),
-
             Divider(),
             SizedBox(height: 8),
             Text(
@@ -122,21 +135,21 @@ class ProductCard extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
             SizedBox(height: 8),
-
-            // Action Button to Update Stock
-            ElevatedButton(
-              onPressed: () {
-                // Handle stock update action
-                // For example, show a dialog to update stock or navigate to another screen
-              },
-              child: Text('Update Stock'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                // primary: Colors.blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-            ),
+            CommonButton(
+                color: Colors.black,
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.edit, color: Colors.white),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Update Stock',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                width: 200,
+                onTap: updateStock),
           ],
         ),
       ),
